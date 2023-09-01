@@ -1,82 +1,3 @@
-const contentCategories = async () => {
-    const response = await fetch(`https://openapi.programming-hero.com/api/videos/categories`);
-    const data = await response.json();
-    const categoryData = data.data;
-    categoryMenu(categoryData)
-    pHeroContent();
-}
-
-const categoryMenu = (category) => {
-
-    const ulWrapper = document.createElement('div');
-    ulWrapper.classList = `grid item-center justify-center mb-8`
-    const ul = document.createElement('ul');
-    ul.classList = `menu menu-horizontal gap-3`;
-    ulWrapper.appendChild(ul);
-    main.appendChild(ulWrapper)
-    category.forEach(item => {
-        const categoryName = item.category;
-        // console.log(categoryName);
-        const li = document.createElement('li');
-        li.id = `category-id`;
-        li.classList = `bg-base-200 rounded-md hover:bg-[#FF1F3D]`;
-        li.innerHTML = `<a class='hover:text-white'>${categoryName}</a>`
-        ul.appendChild(li);
-    });
-}
-
-const pHeroContent = async () => {
-    const response = await fetch(`https://openapi.programming-hero.com/api/videos/category/1000`);
-    const data = await response.json();
-    const contentData = data.data;
-
-
-    const contentWrapper = document.createElement('div');
-    contentWrapper.classList = `grid grid-cols-4 gap-6`
-    main.appendChild(contentWrapper);
-
-    contentData.forEach(content => {
-        const thumbnail = content.thumbnail;
-        const title = content.title;
-        const profilePicture = content.authors[0].profile_picture;
-        const authorName = content.authors[0].profile_name;
-        const verified = content.authors[0].verified;
-        const views = content.others.views;
-        
-        
-        const card = document.createElement('div');
-        card.classList = `card max-w-xs bg-base-100`;
-        card.innerHTML = `
-        <figure class="h-52 bg-white rounded-lg"><img src="${thumbnail}" alt="${title}" class="h-full w-full"/></figure>
-        <div class="card-body p-5 flex-row items-start justify-start gap-4">
-            <div class='h-10 w-10'>
-                <img src="${profilePicture}" alt="${authorName}" class="h-full w-full rounded-full"/>
-            </div>
-
-            <div>
-                <h2 class="card-title text-base">${title}</h2>
-
-                <div class="text-gray-500 text-base space-y-1">
-                    <p class="flex justify-start items-center">
-                        <span>${authorName}</span>
-                        <span class="pl-1 mt-1">${verified?'<img src="./images/verify.png" class="h-5 w-5">': ""}</span>
-                    </p>
-                    <p>${views} Views</p>
-                </div>
-            </div>
-        </div>
-        `
-        contentWrapper.appendChild(card);
-    });
-
-}
-
-
-
-
-
-contentCategories()
-
 const screenWidth = `max-w-screen-xl mx-auto py-5`
 const header = document.getElementById('header');
 const main = document.getElementById('main');
@@ -111,3 +32,81 @@ header.innerHTML = `
     </div>
 </div>
 `;
+
+// pHero data
+const contentCategories = async () => {
+    const response = await fetch(`https://openapi.programming-hero.com/api/videos/categories`);
+    const data = await response.json();
+    const categoryData = data.data;
+    categoryMenu(categoryData)
+}
+
+
+// pHero category menu
+const categoryMenu = (category) => {
+    const menuWrapper = document.getElementById('menu-wrapper');
+    menuWrapper.classList = `grid item-center justify-center mb-8`
+    const ul = document.createElement('ul');
+    // ul.id='menu';
+    ul.classList = `menu menu-horizontal gap-3`;
+    menuWrapper.appendChild(ul);
+    main.appendChild(menuWrapper)
+    category.forEach(item => {
+        const categoryName = item.category;
+        const categoryId = item.category_id;
+        // console.log(categoryName);
+        const li = document.createElement('li');
+        li.classList = `bg-base-200 rounded-md hover:bg-[#FF1F3D]`;
+        li.innerHTML = `<a onclick="pHeroContent('${categoryId}')" class='hover:text-white'>${categoryName}</a>`
+        ul.appendChild(li);
+    });
+};
+
+// pHero Contents
+const pHeroContent = async (categoryIdValue) => {
+    console.log(categoryIdValue);
+    const response = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryIdValue}`);
+    const data = await response.json();
+    const contentData = data.data;
+
+    const contentWrapper = document.getElementById('content-wrapper');    
+    contentWrapper.innerHTML = '';
+    contentWrapper.classList = `grid grid-cols-4 gap-6`
+    main.appendChild(contentWrapper);
+    
+    contentData.forEach(content => {
+        // card data
+        const thumbnail = content.thumbnail;
+        const title = content.title;
+        const profilePicture = content.authors[0].profile_picture;
+        const authorName = content.authors[0].profile_name;
+        const verified = content.authors[0].verified;
+        const views = content.others.views;
+
+        const card = document.createElement('div');
+        card.classList = `card max-w-xs bg-base-100`;
+        card.innerHTML = `
+        <figure class="h-52 bg-white rounded-lg"><img src="${thumbnail}" alt="${title}" class="h-full w-full"/></figure>
+        <div class="card-body p-5 flex-row items-start justify-start gap-4">
+            <div class='h-10 w-10'>
+                <img src="${profilePicture}" alt="${authorName}" class="h-full w-full rounded-full"/>
+            </div>
+
+            <div class="space-y-1">
+                <h2 class="card-title text-base">${title}</h2>
+
+                <div class="text-gray-500 text-base space-y-1">
+                    <p class="flex justify-start items-center">
+                        <span>${authorName}</span>
+                        <span class="pl-1 mt-1">${verified?'<img src="./images/verify.png" alt="verified author" class="h-5 w-5">': ""}</span>
+                    </p>
+                    <p>${views} Views</p>
+                </div>
+            </div>
+        </div>
+        `
+        contentWrapper.appendChild(card);
+    });
+}
+pHeroContent('1000');
+contentCategories()
