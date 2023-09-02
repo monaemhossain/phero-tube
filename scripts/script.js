@@ -1,6 +1,7 @@
 const screenWidth = `xl:max-w-screen-xl mx-auto py-5 px-4`
 const main = document.getElementById('main');
 main.classList = screenWidth;
+main.classList.add('mb-8')
 
 const header = document.getElementById('header');
 header.classList = screenWidth;
@@ -13,10 +14,10 @@ header.innerHTML = `
         </a>
     </div>
     <div class="navbar-center">
-        <a id="sort-btn" class="btn sort-btn">Sort by view</a>
+        <a id="sort-btn" class="btn capitalize bg-gray-300 sort-btn">Sort by view</a>
     </div>
     <div class="navbar-end">
-        <a href="./blog.html" class="btn bg-[#FF1F3D] text-white hover:text-black">Blog</a>
+        <a href="./blog.html" class="btn capitalize bg-[#FF1F3D] text-white hover:text-black">Blog</a>
     </div>
 </div>
 
@@ -49,29 +50,24 @@ const contentCategories = async () => {
 
 // pHero menu for content by category
 const categoryMenu = (category) => {
+
+
     const menuWrapper = document.getElementById('menu-wrapper');
-    menuWrapper.classList = `grid item-center justify-center mb-8`
+    menuWrapper.classList = `grid item-center justify-center mb-8 mt-3`
     const ul = document.createElement('ul');
     // ul.id='menu';
-    ul.classList = `menu menu-horizontal gap-3 flex-wrap items-center justify-center`;
+    ul.classList = `flex flex-wrap justify-center items-center gap-3`;
     menuWrapper.appendChild(ul);
-    main.appendChild(menuWrapper)
+    // main.appendChild(menuWrapper)
     category.forEach(item => {
         const categoryName = item.category;
         const categoryId = item.category_id;
-        // console.log(categoryName);
         const li = document.createElement('li');
-        li.classList = `btn bg-base-400 rounded-md hover:bg-[#FF1F3D]`;
-        li.classList.remove('active')
-        li.setAttribute('onclick', 'btnActive(this)');
-        li.innerHTML = `<a onclick="pHeroContent('${categoryId}')" class=''>${categoryName}</a>`
+        li.innerHTML = `<button onclick="pHeroContent('${categoryId}')" class="btn tab-btn bg-gray-300 hover:bg-[#FF1F3D] hover:text-white rounded-md">${categoryName}</button>`
         ul.appendChild(li);
     });
 };
 
-const btnActive = (value) => {
-    value.classList.add('active');
-}
 // process of sorting content
 const sortByViews = (data) => {
     data.sort((a,b) => {
@@ -161,8 +157,10 @@ const pHeroContent = async (categoryIdValue) => {
     document.getElementById('sort-btn').addEventListener('click', function(){
         sortByViews(contentData)
         sortContent(contentData)
-    })
+    });
+    
     contentCard(contentData);
+
     
 }
 contentCategories()

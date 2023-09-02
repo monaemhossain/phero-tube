@@ -13,7 +13,7 @@
     <!-- custom css -->
     <link rel="stylesheet" href="./styles/style.css">
     <style>
-        .sort-btn{
+        .sort-btn,#content-wrapper,#menu-wrapper{
             display: none;
         }
     </style>
@@ -23,8 +23,27 @@
     <header id="header">
     </header>
     <main id="main">
-
+        <section class="max-w-2xl mx-auto space-y-5">
+            <h2 class="text-5xl font-bold mb-8">Blog Questions</h2>
+            
+            <div>
+                <h2 class="text-3xl font-semibold">var, let and const</h2>
+                <p>var is not block scop and it is hoisted. Means we don't need to declare before use. Also var is global so that we can access it from any where in the current code. Sometime it can make some issue so we will never use var.</p>
+                <p>On the other hand let and const introduce in es6, let and const are block scop. It must be declared before use or else you will get an error. let can be re-declared but you re-declaring const is impossible. And can't be accessible globally. So there is no chance you declare same variable again and again. This will make you code more bug free. And we will always use let and const instead of var.</p>
+            </div>
+            <div>
+                <h2 class="text-3xl font-semibold">Use cases of null and undefined</h2>
+                <p>null and undefined are both used to represent if the value of a data is not found or empty. However, there are some differences between them. undefined is used when a variable has been declared but has not been assigned a value. On the other hand, null is used to represent an intentional absence of any object value.</p>
+                <p>undefined is a default value for function arguments and return values. It can also be used to check if a variable has been initialized or not. But null is used to indicate that an object does not exist or that it has no value.</p>
+            </div>
+            <div>
+                <h2 class="text-3xl font-semibold">What do you mean by REST API?</h2>
+                <p>A REST API is an API that conforms to the design principles of the REST, or representational state transfer architectural style. It is a set of rules that define how applications or devices can connect to and communicate with each other. REST APIs provide a flexible, lightweight way to integrate applications and to connect components in microservices architectures.</p>
+            </div>
+        </section>
     </main>
+    <div id="menu-wrapper" class="hidden"></div>
+    <div id="content-wrapper" class="hidden"></div>
     <!-- Scripts -->
     <script src="./scripts/script.js"></script>
 </body>
