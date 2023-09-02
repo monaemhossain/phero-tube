@@ -28,10 +28,10 @@ header.innerHTML = `
         </a>
     </div>
     <div>
-        <a class="btn sort-btn">Sort by view</a>
+        <a id="sort-btn-mobile" class="btn capitalize bg-gray-300 sort-btn">Sort by view</a>
     </div>
     <div>
-        <a href="./blog.html" class="btn bg-[#FF1F3D]">Blog</a>
+        <a href="./blog.html" class="btn capitalize bg-[#FF1F3D] text-white hover:text-black">Blog</a>
     </div>
 </div>
 
@@ -155,6 +155,10 @@ const pHeroContent = async (categoryIdValue) => {
     const dataStatus = data.status;
 
     document.getElementById('sort-btn').addEventListener('click', function(){
+        sortByViews(contentData)
+        sortContent(contentData)
+    });
+    document.getElementById('sort-btn-mobile').addEventListener('click', function(){
         sortByViews(contentData)
         sortContent(contentData)
     });
